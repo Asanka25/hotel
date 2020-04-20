@@ -33,7 +33,6 @@ class KitchenChangeAvailability extends StatelessWidget {
         ],
       ),
       body: Container(
-     
         // child: Center(
         //   child: Container(
         //     color: Colors.grey,
@@ -55,9 +54,9 @@ class KitchenChangeAvailability extends StatelessWidget {
         //   ),
         // ),
         child: ListView.builder(
-          itemCount:categoryList.length,
+          itemCount: categoryList.length,
           itemBuilder: (context, index) {
-            var category=categoryList[index];
+            var category = categoryList[index];
             return Container(
               // color: Colors.redAccent,
               // height: 120,
@@ -66,14 +65,15 @@ class KitchenChangeAvailability extends StatelessWidget {
                 elevation: 5,
                 child: InkWell(
                   onTap: () async {
-                   
-                    List menuItems = await KitchenDatabase().getItemData(category.docId);
+                    List menuItems =
+                        await KitchenDatabase().getItemData(category.docId);
 
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                FilterItem(menuItems: menuItems)));
+                            builder: (context) => FilterItem(
+                                menuItems: menuItems,categoryName:category.categoryName,
+                                categoryId: category.docId)));
                   },
                   child: Container(
                     height: 150,

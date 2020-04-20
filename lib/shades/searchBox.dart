@@ -5,7 +5,7 @@ const searchBoxDecoration = InputDecoration(
   prefixIcon: Icon(Icons.search),
   fillColor: Colors.transparent,
   filled: true,
-  hintText: "         Search something",
+  // hintText: "Search something",
   // enabledBorder: UnderlineInputBorder(
   //     borderSide: BorderSide(color: Colors.blue, width: 1.0)),
   enabledBorder: OutlineInputBorder(

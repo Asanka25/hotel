@@ -42,29 +42,114 @@ class DashboardScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        height: 150,
-        width: 350,
-        child: GestureDetector(
-          onTap: () async {
-            var category = await KitchenDatabase().getCategoryList();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        KitchenChangeAvailability(categoryList: category)));
-          },
-          child: Card(
-            elevation: 40,
-            color: Colors.grey[50],
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.white70, width: 1),
-              borderRadius: BorderRadius.circular(10),
+      body: Column(
+        children: <Widget>[
+          Container(
+            height: 150,
+            width: 350,
+            child: GestureDetector(
+              onTap: () async {
+                var category = await KitchenDatabase().getCategoryList();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            KitchenChangeAvailability(categoryList: category)));
+              },
+              child: Card(
+                elevation: 40,
+                color: Colors.grey[50],
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.white70, width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                child: Center(child: Text("Change items' avaiability")),
+              ),
             ),
-            margin: EdgeInsets.fromLTRB(10, 20, 0, 0),
-            child: Center(child: Text("Change items' avaiability")),
           ),
-        ),
+
+//first row
+
+          Row(
+            children: <Widget>[
+              Container(
+                height: 150,
+                width: 200,
+                child: GestureDetector(
+                  onTap: () async {
+                    var category = await KitchenDatabase().getCategoryList();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => KitchenChangeAvailability(
+                                categoryList: category)));
+                  },
+                  child: Card(
+                    elevation: 40,
+                    color: Colors.grey[50],
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.white70, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: EdgeInsets.fromLTRB(14, 20, 10, 0),
+                    child: Center(child: Text("Change 1")),
+                  ),
+                ),
+              ),
+              Container(
+                height: 150,
+                width: 155,
+                child: GestureDetector(
+                  onTap: () async {
+                    var category = await KitchenDatabase().getCategoryList();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => KitchenChangeAvailability(
+                                categoryList: category)));
+                  },
+                  child: Card(
+                    elevation: 40,
+                    color: Colors.grey[50],
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.white70, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: EdgeInsets.fromLTRB(14, 20, 10, 0),
+                    child: Center(child: Text("Change 2")),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+//My progress
+Container(
+                height: 240,
+                width: 350,
+                child: GestureDetector(
+                  onTap: () async {
+                    var category = await KitchenDatabase().getCategoryList();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                KitchenChangeAvailability(categoryList: category)));
+                  },
+                  child: Card(
+                    elevation: 40,
+                    color: Colors.grey[50],
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.white70, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                    child: Center(child: Text("Change 3")),
+                  ),
+                ),
+              ),          
+        ],
       ),
     );
   }
