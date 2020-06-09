@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hotel/screens/order_manager/table.dart';
+import 'package:hotel/screens/kitchen/table.dart';
 import 'package:hotel/services/auth.dart';
 import 'package:hotel/services/orderManager_database.dart';
-import 'package:hotel/models/orderManager/Order.dart';
 import 'package:hotel/models/orderManager/tableData.dart';
-import 'package:hotel/shades/constants.dart';
 import 'package:hotel/shades/loading.dart';
 
-class OrderManagerHome extends StatelessWidget {
+class KitchenOrders extends StatelessWidget {
   final AuthService _auth = AuthService();
 
   Widget build(BuildContext context) {
@@ -29,8 +27,7 @@ class OrderManagerHome extends StatelessWidget {
                     color: Colors.blue,
                     onPressed: () {
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/orderManagerDashboard',
-                          (Route<dynamic> route) => false);
+                          '/kitchenDashboard', (Route<dynamic> route) => false);
                     },
                   ),
                   SizedBox(width: 1),
@@ -70,8 +67,8 @@ class OrderManagerHome extends StatelessWidget {
                   }),
             );
           } else {
-            // return CircularProgressIndicator();
             return Container(height: 250.0, width: 250.0, child: Loading());
+           
           }
         });
   }

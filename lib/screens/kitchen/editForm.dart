@@ -1,107 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:hotel/screens/kitchen/item_tile.dart';
-import 'package:hotel/services/kitchen_database.dart';
-import 'package:hotel/shades/constants.dart';
+import 'package:hotel/models/kitchen/KitchenData.dart';
 import 'dart:io';
-import 'package:hotel/services/auth.dart';
+import 'package:hotel/shades/constants.dart';
 import 'package:hotel/shades/loading.dart';
-import 'package:hotel/shades/searchBox.dart';
 import 'package:image_picker/image_picker.dart';
 
-class FilterItem extends StatefulWidget {
-  final List menuItems;
-  final String categoryId;
-  final String categoryName;
+class EditForm extends StatefulWidget {
 
-  const FilterItem(
-      {Key key, this.menuItems, this.categoryId, this.categoryName})
+ final Item item;
+ final int index;
+  final String categoryId;
+  
+
+  const EditForm({Key key, this.item, this.categoryId,this.index})
       : super(key: key);
 
+
   @override
-  _FilterItemState createState() => _FilterItemState();
+  _EditFormState createState() => _EditFormState();
 }
 
-class _FilterItemState extends State<FilterItem> {
-  final AuthService _auth = AuthService();
+class _EditFormState extends State<EditForm> {
   final _formKey = GlobalKey<FormState>();
-  File imageFile;
+   File imageFile;
   String name;
   String description;
   bool available = true;
   int person;
   int price;
   bool loading = false;
-  TextEditingController controller = new TextEditingController();
-  String filter;
-  @override
-  initState() {
-    controller.addListener(() {
-      setState(() {
-        filter = controller.text;
-      });
-    });
-  }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
 
-  Future<File> getImageFromGalery() async {
+
+ Future<File> getImageFromGalery() async {
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
     return image;
   }
-
+void runn(){}
+  @override
   Widget build(BuildContext context) {
-    print("items");
-
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.blue),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text('Food Items', style: TextStyle(color: Colors.blue)),
-        elevation: 1.5,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.home),
-            color: Colors.blue,
-            onPressed: () {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/kitchenDashboard', (Route<dynamic> route) => false);
-            },
-          ),
-          SizedBox(width: 1),
-          PopupMenuButton<int>(
-            icon: Icon(
-              Icons.more_vert,
-              color: Colors.blue,
-            ),
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuEntry<int>>[
-                PopupMenuItem(
-                  value: 1,
-                  child: FlatButton.icon(
-                    icon: Icon(
-                      Icons.person,
-                      color: Colors.blue,
-                    ),
-                    label: Text('Logout', style: TextStyle(color: Colors.blue)),
-                    onPressed: () async {
-                      await _auth.signOut();
-                    },
-                  ),
-                ),
-              ];
-            },
-          ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
+    void popUp(){
+                showDialog(
             context: context,
             builder: (context) {
               return StatefulBuilder(
@@ -133,9 +72,10 @@ class _FilterItemState extends State<FilterItem> {
                                     children: <Widget>[
                                       Padding(
                                         padding: EdgeInsets.all(8.0),
+                                       
                                         child: TextFormField(
                                             decoration: textInputDecoration
-                                                .copyWith(hintText: 'Name'),
+                                                .copyWith(labelText: 'Name'),
                                             validator: (val) => val.isEmpty
                                                 ? 'Enter Name'
                                                 : null,
@@ -148,7 +88,7 @@ class _FilterItemState extends State<FilterItem> {
                                         child: TextFormField(
                                             decoration:
                                                 textInputDecoration.copyWith(
-                                                    hintText: 'Description'),
+                                                    labelText: 'Description'),
                                             validator: (val) => val.isEmpty
                                                 ? 'Enter description'
                                                 : null,
@@ -160,7 +100,7 @@ class _FilterItemState extends State<FilterItem> {
                                         padding: EdgeInsets.all(8.0),
                                         child: TextFormField(
                                             decoration: textInputDecoration
-                                                .copyWith(hintText: 'Price'),
+                                                .copyWith(labelText: 'Price'),
                                             validator: (val) => val.isEmpty
                                                 ? 'Enter valid price'
                                                 : null,
@@ -174,7 +114,7 @@ class _FilterItemState extends State<FilterItem> {
                                         padding: EdgeInsets.all(8.0),
                                         child: TextFormField(
                                             decoration: textInputDecoration
-                                                .copyWith(hintText: 'Person'),
+                                                .copyWith(labelText: 'Person'),
                                             validator: (val) => val.isEmpty
                                                 ? 'Enter valid number'
                                                 : null,
@@ -213,14 +153,14 @@ class _FilterItemState extends State<FilterItem> {
                                             ],
                                           ),
                                           onPressed: () async {
-                                            if (_formKey.currentState
-                                                .validate()) {
-                                              File image =
-                                                  await getImageFromGalery();
-                                              setState(() {
-                                                imageFile = image;
-                                              });
-                                              print("run");
+                                            if (_formKey.currentState.validate()) {
+                                   
+                                            File image =
+                                                await getImageFromGalery();
+                                            setState(() {
+                                              imageFile = image;
+                                            });
+                                    
                                             }
                                           },
                                         ),
@@ -251,14 +191,14 @@ class _FilterItemState extends State<FilterItem> {
                                             setState(() {
                                               loading = true;
                                             });
-                                            await KitchenDatabase().addItem(
-                                                name,
-                                                description,
-                                                price,
-                                                person,
-                                                imageFile,
-                                                widget.categoryId,
-                                                widget.categoryName);
+                                            // await KitchenDatabase().addItem(
+                                            //     name,
+                                            //     description,
+                                            //     price,
+                                            //     person,
+                                            //     imageFile,
+                                            //     widget.categoryId,
+                                            //     widget.categoryName);
                                             // print("run");
                                             Navigator.pop(context);
                                             setState(() {
@@ -266,6 +206,7 @@ class _FilterItemState extends State<FilterItem> {
                                               imageFile = null;
                                             });
                                           }
+                                          
                                         },
                                       ),
                                     ],
@@ -281,46 +222,10 @@ class _FilterItemState extends State<FilterItem> {
               );
             },
           );
-        },
-        tooltip: 'Add Item',
-        child: Icon(Icons.add),
-        backgroundColor: Color.fromRGBO(181, 2, 100, 1),
-        elevation: 2.0,
-      ),
-      body: Container(
-        // height: 500,
-        // width: 500,
-        child: Column(
-          children: <Widget>[
-            // SizedBox(height: 8),
-            Container(
-              color: Colors.transparent,
-              width: 320,
-              child: TextField(
-                decoration: searchBoxDecoration,
-                controller: controller,
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: widget.menuItems.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return filter == null || filter == ""
-                      ? new ItemTile(item: widget.menuItems[index])
-                      : widget.menuItems[index].name
-                              .toLowerCase()
-                              .contains(filter.toLowerCase())
-                          ? new ItemTile(
-                              item: widget.menuItems[index],
-                              index: index,
-                              categoryId: widget.categoryId)
-                          : new Container();
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+    }
+    return Container(
+      color: Colors.redAccent,
+      child: Text('index'),
     );
   }
 }

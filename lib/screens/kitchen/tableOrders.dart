@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hotel/screens/order_manager/orderDetailsTile.dart';
-import 'package:hotel/shades/orderManagerStyles.dart';
+import 'package:hotel/screens/kitchen/orderDetailsTile.dart';
+import 'package:hotel/services/orderManager_database.dart';
+import 'package:hotel/shades/kitchenStyles.dart';
+import 'package:provider/provider.dart';
+import 'package:hotel/screens/kitchen/item_tile.dart';
 import 'package:hotel/services/auth.dart';
 import 'package:intl/intl.dart';
 
@@ -27,7 +31,7 @@ class TableOrders extends StatelessWidget {
               color: Colors.blue,
               onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/orderManagerDashboard', (Route<dynamic> route) => false);
+                    '/kitchenDashboard', (Route<dynamic> route) => false);
               },
             ),
             SizedBox(width: 1),
@@ -67,7 +71,9 @@ class TableOrders extends StatelessWidget {
             String status = orders[index].status;
             String orderId = orders[index].orderId;
 
-            return (status != 'confirmed')
+            return (status == 'confirmed' ||
+                    status == 'cooking' ||
+                    status == 'cooked')
                 ? Column(
                     children: <Widget>[
                       SizedBox(height: 20),

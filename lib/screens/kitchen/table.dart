@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:hotel/screens/order_manager/tableOrders.dart';
-import 'package:hotel/screens/order_manager/tabbar.dart';
-
+import 'package:hotel/screens/kitchen/tableOrders.dart';
 import 'package:hotel/services/orderManager_database.dart';
-import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hotel/shades/loading.dart';
 
 class TableView extends StatefulWidget {
@@ -18,44 +14,7 @@ class TableView extends StatefulWidget {
 
 class TableViewState extends State<TableView> {
   bool isLoading = false;
-  Widget _buildBottomRow(var ordersStatus) => Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(10, 7, 0, 0),
-            child: Center(
-              child: Text(
-                "${ordersStatus['served'] ?? 0} Served",
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Color.fromRGBO(182, 182, 182, 1),
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(30, 7, 0, 0),
-            child: Center(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "${ordersStatus['finished'] ?? 0} ",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Icon(
-                    Icons.attach_money,
-                    color: Colors.blue,
-                    size: 17,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      );
+
   Widget _buildUpperRow(var ordersStatus, var orders) => Row(
         children: [
           Padding(
@@ -123,7 +82,7 @@ class TableViewState extends State<TableView> {
                         ),
                         child: Center(
                             child: Text(
-                          "${ordersStatus['placed'] ?? 0}",
+                          "${ordersStatus['confirmed'] ?? 0}",
                           style: TextStyle(
                               fontSize: 11,
                               color: Colors.white,
@@ -199,7 +158,7 @@ class TableViewState extends State<TableView> {
                       padding: EdgeInsets.all(1),
                       child: Center(
                           child: Text(
-                        "Finished",
+                        "Cooked",
                         style: TextStyle(
                             fontSize: 11,
                             color: Color.fromRGBO(111, 46, 208, 1),
@@ -234,6 +193,23 @@ class TableViewState extends State<TableView> {
 
                 // SizedBox(height:10.0),
               ],
+            ),
+          ),
+        ],
+      );
+  Widget _buildBottomRow(var ordersStatus) => Row(
+        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(38, 7, 0, 0),
+            child: Center(
+              child: Text(
+                "${ordersStatus['served'] ?? 0} Completed",
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Color.fromRGBO(182, 182, 182, 1),
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],

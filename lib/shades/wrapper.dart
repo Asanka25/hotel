@@ -1,10 +1,9 @@
 import 'package:hotel/models/user/user.dart';
 import 'package:hotel/screens/authenticate/authenticate.dart';
-import 'package:hotel/screens/kitchen/test45.dart';
 import 'package:flutter/material.dart';
 // import 'package:hotel/screens/manager/manager.dart';
 import 'package:hotel/screens/order_manager/order_manager_home.dart';
-import 'package:hotel/screens/virtual_waiter/vwaiter_home.dart';
+// import 'package:hotel/screens/virtual_waiter/vwaiter_home.dart';
 import 'package:hotel/services/database.dart';
 import 'package:provider/provider.dart';
 

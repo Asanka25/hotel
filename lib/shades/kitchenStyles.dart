@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotel/services/kitchen_database.dart';
 import 'package:hotel/services/orderManager_database.dart';
 
 class getButton extends StatefulWidget {
@@ -19,55 +20,38 @@ class _getButtonState extends State<getButton> {
   }
 
   Widget build(BuildContext context) {
-    if (this.widget.status == 'cooking')
-      return RaisedButton(
-        color: Colors.blue,
-        disabledColor: Color.fromRGBO(38, 153, 251, 1),
-        child: Text(
-          'cooking..',
-          style: TextStyle(color: Colors.white),
-        ),
-        onPressed: null,
-      );
-    else if (this.widget.status == 'served')
+    if (this.widget.status == 'cooked')
       return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Text(
-          'Served',
+          'Finished',
           style: TextStyle(
               color: Colors.pinkAccent,
-              fontSize: 16,
+              fontSize: 19,
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.bold),
         ),
       );
-    // color: Color.fromRGBO( 111, 46, 208,1),
-
     else {
       return RaisedButton(
-        color: this.widget.status == 'placed'
+        color: this.widget.status == 'confirmed'
             ? Colors.pink[400]
-            : this.widget.status == 'cooked'
+            : this.widget.status == 'cooking'
                 ? Color.fromRGBO(111, 46, 208, 1)
-                : this.widget.status == 'finished'
-                    ? Color.fromRGBO(43, 204, 89, 1)
-                    : Colors.white,
+                : Colors.white,
         child: Text(
-          (this.widget.status == 'placed')
+          (this.widget.status == 'confirmed')
               ? 'Accept'
-              : this.widget.status == 'cooked'
-                  ? 'Deliver'
-                  : this.widget.status == 'finished' ? 'Paid' : "",
+              : this.widget.status == 'cooking' ? 'Cooked' : "",
           style: TextStyle(color: Colors.white),
         ),
         onPressed: !clicked
             ? () async {
-              setState(() {
+                setState(() {
                   clicked = true;
                 });
-                await OrderManagerDatabase()
+                await KitchenDatabase()
                     .updateOrderStatus(this.widget.status, this.widget.orderId);
-                
               }
             : null,
       );

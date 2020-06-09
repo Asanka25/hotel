@@ -13,8 +13,9 @@ class Item{
   final String name;
   final String description;
   final int price;
+  final int persons;
 
-  Item({ this.docId,this.imageUrl,this.available, this.name, this.description,  this.price });
+  Item({this.persons, this.docId,this.imageUrl,this.available, this.name, this.description,  this.price });
 
 }
 

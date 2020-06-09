@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hotel/models/kitchen/KitchenData.dart';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class KitchenDatabase {
   //collection reference
@@ -9,8 +10,32 @@ class KitchenDatabase {
       Firestore.instance.collection('main-menu');
   final CollectionReference itemCollection =
       Firestore.instance.collection('items');
+  final CollectionReference orderCollection =
+      Firestore.instance.collection('orders');
   final CollectionReference test = Firestore.instance.collection('test');
   // StorageReference reference= FirebaseStorage.instance.ref();
+
+//---------------------------------------------------------------------------------------------------------
+//Change status of order
+  Future updateOrderStatus(String status, String orderId) async {
+    DateTime datetime = DateTime.now();
+    final FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    String id = user.uid;
+    var snap = await orderCollection.document(orderId).get();
+    Map data = snap.data['staffInteract'];
+    if (status == 'confirmed') {
+      await orderCollection.document(orderId).updateData({'status': 'cooking'});
+      List cookedBy = [id, datetime, orderId];
+      data['cookedBy'] = cookedBy;
+      await orderCollection
+          .document(orderId)
+          .updateData({'staffInteract': data});
+    } else if (status == 'cooking') {
+      return await orderCollection
+          .document(orderId)
+          .updateData({'status': 'cooked'});
+    }
+  }
 
 //Add new item
 //upload image
@@ -24,31 +49,44 @@ class KitchenDatabase {
     return downloadUrl;
   }
 
-
-
-
-  Future addItem(String name, String description, int price, int person,
-      File imageFile, String categoryId,String categoryName) async {
+  Future addItem(String name, String description, int price, int persons,
+      File imageFile, String categoryId, String categoryName) async {
     String downloadUrl = await uploadImage(imageFile);
     DocumentReference docRef = await itemCollection.add({
       'name': name,
-      'category':categoryName,
+      'category': categoryName,
       'description': description,
-      'person': person,
+      'persons': persons,
       'price': price,
       'available': true,
       'image': downloadUrl
     });
-    // print(docref);
+
     var snap = await categoryCollection.document(categoryId).get();
     List data = snap.data['menuItems'];
     Map map = {'item': docRef, 'type': 'Default'};
     data.add(map);
     // print(dat);
-    await categoryCollection.document(categoryId).updateData({'menuItems': data});
+    await categoryCollection
+        .document(categoryId)
+        .updateData({'menuItems': data});
   }
 
-
+//------------------------------------------------------------------------------------------
+//update item
+  Future updateItem(String name, String description, int price, int persons,
+      File imageFile, String downloadURL, String docId) async {
+    String downloadUrl =
+        imageFile != null ? await uploadImage(imageFile) : downloadURL;
+    await itemCollection.document(docId).updateData({
+      'name': name,
+      'description': description,
+      'persons': persons,
+      'price': price,
+      'available': true,
+      'image': downloadUrl
+    });
+  }
 
 //-----------------------------------------------------------------------------------------
 //get category list
@@ -69,7 +107,7 @@ class KitchenDatabase {
 
 //-----------------------------------------------------------------------------------------------------------
 
-//Change availability of order
+//Change availability of item
   Future updateAvailability(bool avaiability, String docId) async {
     return await itemCollection
         .document(docId)
@@ -82,6 +120,7 @@ class KitchenDatabase {
   Future<List<Item>> getItemDataFromSnap(DocumentSnapshot snapshot) async {
     List<Item> itemData = [];
     List items = await snapshot.data['menuItems'];
+
     for (var item in items) {
       // var itemRef=item['item'];
       // print(item['item']);
@@ -91,6 +130,7 @@ class KitchenDatabase {
         docId: dataSnap.documentID,
         name: dataSnap.data['name'],
         imageUrl: dataSnap.data['image'],
+        persons: dataSnap.data['persons'],
         description: dataSnap.data['description'],
         price: dataSnap.data['price'],
         available: dataSnap.data['available'],
@@ -103,11 +143,11 @@ class KitchenDatabase {
     try {
       DocumentSnapshot snapshot =
           await categoryCollection.document(docId).get();
-      List items = await getItemDataFromSnap(snapshot);
-
+      List<Item> items = await getItemDataFromSnap(snapshot);
+      
       return items;
     } catch (e) {
-      print(e.toString());
+      
       return null;
     }
   }

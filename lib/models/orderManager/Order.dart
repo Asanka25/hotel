@@ -8,9 +8,11 @@ class Order {
   final int total;
   final Timestamp datetime;
   final List orderItems;
+  final Map staffInteract;
+
   final int seat;
   // final String table;
-  Order({this.orderId,this.status, this.datetime, this.orderItems, this.total,this.subtotal, this.seat});
+  Order({this.orderId,this.status, this.datetime, this.orderItems, this.total,this.subtotal,this.staffInteract, this.seat});
 }
 
 
@@ -23,9 +25,10 @@ class OrderWithDetails {
   final int total;
   final Timestamp datetime;
   final List orderItems;
+  final Map staffInteract;
   final int seat;
   // final String table;
-  OrderWithDetails ({this.orderId,this.status, this.datetime, this.orderItems, this.total,this.subtotal, this.seat});
+  OrderWithDetails ({this.orderId,this.status, this.datetime, this.orderItems,this.staffInteract, this.total,this.subtotal, this.seat});
 }
 
 class OrderItem{

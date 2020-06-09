@@ -3,7 +3,9 @@ import 'package:hotel/models/orderManager/Order.dart';
 
 class Tables {
   final int tableNo;
-  Tables({this.tableNo});
+  final int noOfSeats;
+  final String docId;
+  Tables({this.tableNo,this.noOfSeats,this.docId});
 }
 
 

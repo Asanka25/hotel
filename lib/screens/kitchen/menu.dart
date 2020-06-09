@@ -1,9 +1,7 @@
 import 'package:hotel/models/kitchen/KitchenData.dart';
+import 'package:hotel/screens/kitchen/KitchenDashboard.dart';
 import 'package:hotel/screens/kitchen/filter.dart';
 import 'package:hotel/services/kitchen_database.dart';
-import 'package:hotel/screens/kitchen/foodItemList.dart';
-import 'package:hotel/shades/loading.dart';
-import 'package:hotel/shades/constants.dart';
 import 'package:hotel/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
@@ -18,49 +16,49 @@ class KitchenChangeAvailability extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text('Order manager'),
+        iconTheme: IconThemeData(color: Colors.blue),
         backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text('Category View', style: TextStyle(color: Colors.blue)),
         elevation: 1.5,
         actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Logout'),
-            onPressed: () async {
-              await _auth.signOut();
+          IconButton(
+            icon: Icon(Icons.home),
+            color: Colors.blue,
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/kitchenDashboard', (Route<dynamic> route) => false);
+            },
+          ),
+          SizedBox(width: 1),
+          PopupMenuButton<int>(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.blue,
+            ),
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuEntry<int>>[
+                PopupMenuItem(
+                  value: 1,
+                  child: FlatButton.icon(
+                    icon: Icon(Icons.person,color: Colors.blue,),
+                    label: Text('Logout',style:TextStyle(color: Colors.blue)),
+                    onPressed: () async {
+                      await _auth.signOut();
+                    },
+                  ),
+                ),
+              ];
             },
           ),
         ],
       ),
       body: Container(
-        // child: Center(
-        //   child: Container(
-        //     color: Colors.grey,
-        //     child: InkWell(
-        //         onTap: () async {
-        //           var str = 'J0wrS7SivfQaJQBaydgd';
-        //           List menuItems = await KitchenDatabase().getItemData(str);
-
-        //           Navigator.push(
-        //               context,
-        //               MaterialPageRoute(
-        //                   builder: (context) => FilterItem(menuItems:menuItems)));
-        //         },
-        //         child: Container(
-        //           height: 200,
-        //           width: 150,
-        //           child: Text('Pasta'),
-        //         )),
-        //   ),
-        // ),
         child: ListView.builder(
           itemCount: categoryList.length,
           itemBuilder: (context, index) {
             var category = categoryList[index];
             return Container(
-              // color: Colors.redAccent,
-              // height: 120,
-              // width: 70,
               child: Card(
                 elevation: 5,
                 child: InkWell(
@@ -72,12 +70,12 @@ class KitchenChangeAvailability extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => FilterItem(
-                                menuItems: menuItems,categoryName:category.categoryName,
+                                menuItems: menuItems,
+                                categoryName: category.categoryName,
                                 categoryId: category.docId)));
                   },
                   child: Container(
                     height: 150,
-                    // width: double.maxFinite,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(category.imageUrl),
@@ -85,12 +83,11 @@ class KitchenChangeAvailability extends StatelessWidget {
                       ),
                     ),
                     child: ClipRRect(
-                      // make sure we apply clip it properly
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 0.5, sigmaY: 0.5),
                         child: Container(
                           alignment: Alignment.center,
-                          color: Colors.black.withOpacity(0.3),
+                          color: Colors.white10.withOpacity(0.1),
                           child: Text(
                             "${category.categoryName}",
                             style: TextStyle(

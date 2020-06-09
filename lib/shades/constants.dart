@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 const textInputDecoration = InputDecoration(
+  labelText: "",
   fillColor: Colors.transparent,
   filled: true,
   enabledBorder: UnderlineInputBorder(

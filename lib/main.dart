@@ -1,6 +1,6 @@
 import 'package:hotel/models/user/user.dart';
-import 'package:hotel/screens/kitchen/test45.dart';
-// import 'package:hotel/screens/kitchen/test.dart';
+import 'package:hotel/screens/kitchen/KitchenDashboard.dart';
+import 'package:hotel/screens/order_manager/orderManagerDashboard.dart';
 import 'package:hotel/screens/wrapper.dart';
 import 'package:hotel/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,10 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(initialRoute: '/', routes: {
         '/': (context) => Wrapper(),
+        '/kitchenDashboard': (context) => KitchenDashboardScreen(),
+        '/orderManagerDashboard': (context) => OrderManagerDashboardScreen(),
+
+
         // '/test': (context) => Kitchen(),
       }),
     );
