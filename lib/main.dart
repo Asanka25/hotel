@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthService().user,
-      child: MaterialApp(initialRoute: '/', routes: {
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,initialRoute: '/', routes: {
         '/': (context) => Wrapper(),
         '/kitchenDashboard': (context) => KitchenDashboardScreen(),
         '/orderManagerDashboard': (context) => OrderManagerDashboardScreen(),

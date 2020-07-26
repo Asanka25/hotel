@@ -28,7 +28,7 @@ class TableViewState extends State<TableView> {
                 "${ordersStatus['served'] ?? 0} Served",
                 style: TextStyle(
                     fontSize: 12,
-                    color: Color.fromRGBO(182, 182, 182, 1),
+                    color: Color.fromRGBO(120, 120, 120, 1),
                     fontWeight: FontWeight.bold),
               ),
             ),

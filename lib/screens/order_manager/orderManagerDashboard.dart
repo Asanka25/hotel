@@ -61,6 +61,8 @@ class OrderManagerDashboardScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             //My progress
+            SizedBox(height: 10),
+
             Container(
               height: 240,
               width: 350,
@@ -71,9 +73,7 @@ class OrderManagerDashboardScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              MyProgress(count:count)
-                              ));
+                          builder: (context) => MyProgress(count: count)));
                 },
                 child: Card(
                   elevation: 40,
@@ -82,17 +82,19 @@ class OrderManagerDashboardScreen extends StatelessWidget {
                     side: BorderSide(color: Colors.white70, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  margin: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                  margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 30),
-                      Text("My progress",
+                      SizedBox(height: 10),
+                      Text("Progress",
                           style: TextStyle(
                               color: Colors.blueAccent, fontSize: 25)),
-                      SizedBox(height: 30),
+                      SizedBox(height: 10),
                       Image.asset(
                         'assets/kitchen/chart.png',
-                        scale: 1.8,
+                        fit: BoxFit.contain,
+                        width: 400,
+                        height: 180,
                       ),
                     ],
                   ),
@@ -130,14 +132,14 @@ class OrderManagerDashboardScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w400,
                                     fontSize: 25)),
                           ),
-                          Text("4/6",
+                          Text("4/7",
                               style: TextStyle(
                                   color: Colors.purple,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 25)),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("2 free tables",
+                            child: Text("3 free tables",
                                 style: TextStyle(
                                     color: Colors.purple,
                                     fontWeight: FontWeight.w400,
@@ -191,7 +193,7 @@ class OrderManagerDashboardScreen extends StatelessWidget {
                           ImageIcon(
                             AssetImage("assets/kitchen/add.png"),
                             size: 68,
-                            color: Colors.green[600],
+                            color: Color.fromRGBO(181, 2, 100, 1),
                           ),
                         ],
                       ),

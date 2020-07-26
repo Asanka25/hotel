@@ -3,7 +3,6 @@ import 'package:hotel/services/auth.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:hotel/services/orderManager_database.dart';
 
-
 class MyProgress extends StatefulWidget {
   @override
   Map count;
@@ -14,14 +13,12 @@ class MyProgress extends StatefulWidget {
 class _MyProgressState extends State<MyProgress> {
   final AuthService _auth = AuthService();
   List<charts.Series<Task, String>> _seriesPieData;
-  
 
-  _generateData() async{
-
-    List<Task> pieData=[];
-     widget.count.forEach((k,v) { 
-       pieData.add(Task(task: k,taskvalue: v));
-     });
+  _generateData() async {
+    List<Task> pieData = [];
+    widget.count.forEach((k, v) {
+      pieData.add(Task(task: k, taskvalue: v));
+    });
 
     _seriesPieData.add(
       charts.Series(
@@ -37,7 +34,6 @@ class _MyProgressState extends State<MyProgress> {
   @override
   void initState() {
     super.initState();
-    
 
     _seriesPieData = List<charts.Series<Task, String>>();
     _generateData();
@@ -50,7 +46,7 @@ class _MyProgressState extends State<MyProgress> {
           backgroundColor: Colors.white,
           title: Center(
             child: Text(
-              'My progress',
+              'Progress chart',
               style: TextStyle(
                   color: Colors.blueAccent, fontWeight: FontWeight.w600),
             ),

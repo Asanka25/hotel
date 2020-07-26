@@ -41,6 +41,7 @@ class _SignInState extends State<SignIn> {
         : Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
+              iconTheme: IconThemeData(color: Colors.red),
               backgroundColor: Colors.white,
               // elevation: 0.0,
               // backgroundColor: Colors.transparent,
@@ -48,13 +49,14 @@ class _SignInState extends State<SignIn> {
               title: Align(
                 child: Text(
                   'Sign In to Pearl',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.blue),
                 ),
               ),
               actions: <Widget>[
                 FlatButton.icon(
-                  icon: Icon(Icons.person),
-                  label: Text('Register'),
+                  icon: Icon(Icons.person,color: Colors.blueAccent,),
+                  label: Text('Register',
+                  style: TextStyle(color: Colors.blue),),
                   onPressed: () {
                     widget.toggleView();
                   },
